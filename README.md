@@ -1,3 +1,6 @@
+# Blog App
+I will create this project with react and context structure. It will include various library as well. 
+
 ## Project Skeleton Example
 
 ```
