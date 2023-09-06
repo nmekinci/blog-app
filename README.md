@@ -1,6 +1,11 @@
 # Blog App
 I will create this project with react and context structure. It will include various library as well. 
 
+yarn add formik
+yarn add yup
+yarn add axios
+yarn add react-router-dom
+
 ## Project Skeleton Example
 
 ```
