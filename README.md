@@ -1,4 +1,6 @@
+## Project Skeleton Example
 
+```
 SKELETON
 ├── src
 │    ├── index.js
@@ -41,3 +43,4 @@ SKELETON
 │    │   └── useAxios.jsx
 │    └── styles
 │        └── globalStyles.jsx
+```
