@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(false);
 
-  const BASE_URL = "http://30117.fullstack.clarusway.com/";
+  const url = process.env.REACT_APP_BASE_URL
 
   const newuser = {
     username: "pc117",
@@ -28,12 +28,12 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     // loginUser(newuser);
     // createUser(newRegisterUser);
-    // logoutUser()
+    logoutUser()
   }, []);
 
   const createUser = async ( newuser ) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}users/register/`, newuser);
+      const { data } = await axios.post(`${url}users/register/`, newuser);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -42,7 +42,7 @@ const AuthContextProvider = ({ children }) => {
 
   const loginUser = async (user) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}users/auth/login/`, user);
+      const { data } = await axios.post(`${url}users/auth/login/`, user);
       console.log(data);
 
       // Swal.fire(
@@ -56,7 +56,7 @@ const AuthContextProvider = ({ children }) => {
   };
   const logoutUser = async () => {
     try {
-      const { data } = await axios.post(`${BASE_URL}users/auth/logout/`);
+      const { data } = await axios.post(`${url}users/auth/logout/`);
       console.log(data);
 
       // Swal.fire(
