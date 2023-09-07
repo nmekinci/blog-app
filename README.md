@@ -5,6 +5,7 @@ yarn add formik
 yarn add yup
 yarn add axios
 yarn add react-router-dom
+yarn add sweetalert
 
 ## Project Skeleton Example
 

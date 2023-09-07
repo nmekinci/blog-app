@@ -1,14 +1,12 @@
 import AuthContextProvider from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
 
-
 function App() {
   return (
-    <div >
+    <div>
       <AuthContextProvider>
-      <Dashboard />
+        <Dashboard />
       </AuthContextProvider>
-      
     </div>
   );
 }
