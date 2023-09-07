@@ -12,11 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
 
 
-const pages = ['Dashboard', 'New Blog', 'About'];
-const settings = ['My Blogs','Profile', 'Logout', 'Login'];
+// const pages = ['Dashboard', 'New Blog', 'About'];
+const pages = [['Dashboard',"/"], ['New Blog',"/new-blog"], ['About',"/about"]];
+const settings = [['My Blogs',"my-blog"],['Profile',"profile"], ['Logout'], ['Login',"auth"]];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -91,8 +93,9 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page[0]} onClick={handleCloseNavMenu}>
+                  {/* <Typography textAlign="center">{page}</Typography> */}
+                  <Link to={page[1]}>{page[0]}</Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -119,11 +122,11 @@ function NavBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page[0]}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'grey', display: 'block' }}
               >
-                {page}
+                <Link to={page[1]}>{page[0]}</Link>
               </Button>
             ))}
           </Box>
@@ -151,8 +154,9 @@ function NavBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting[0]} onClick={handleCloseUserMenu}>
+                  {/* <Typography textAlign="center">{setting}</Typography> */}
+                  <Link to={setting[1]}>{setting[0]}</Link>
                 </MenuItem>
               ))}
             </Menu>
