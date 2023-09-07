@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import Swal from 'sweetalert2'
 
 export const AuthContext = createContext();
 
@@ -18,11 +19,7 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
  
-//   const requestOptions = {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(newuser),
-//   };
+
 
   const createUser = async ({ newuser }) => {
     try {
@@ -36,13 +33,18 @@ const AuthContextProvider = ({ children }) => {
     try {
         const {data} = await axios.post(`${BASE_URL}users/auth/login/`, newuser)
         console.log(data);
+
+        // Swal.fire(
+        //   'The Internet?',
+        //   'That thing is still around?',
+        //   'question'
+        // )
+
+
     } catch (error) {
         console.log(error);
     }
-    // fetch(`${BASE_URL}users/auth/login/`, requestOptions)
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data))
-    //   .catch((error) => console.log(error));
+   
   };
 
   const values = {
