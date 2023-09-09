@@ -5,10 +5,13 @@ const Footer = () => {
     <div
       style={{
         textAlign: "center",
-        position: "absolute",
-        bottom: "0",
+        // position: "absolute",
+        // left:0,
+        // bottom: 0,
         backgroundColor: "#A4D5A6",
         width: "100%",
+        padding:2,
+
       }}
     >
       <p>Developed by</p>

@@ -11,11 +11,14 @@ import MyBlog from '../pages/MyBlog'
 import BlogDetail from '../pages/BlogDetail'
 import NotFound from '../pages/NotFound'
 import BlogForm from '../components/blog/BlogForm'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
 
 
 const AppRouter = () => {
   return (
     <div>
+          <NavBar />
         <Routes>
             <Route path='/' element={<Dashboard/>}/>
             <Route path='/auth' element={<Auth/>}/>
@@ -31,6 +34,7 @@ const AppRouter = () => {
 
             </Route>
         </Routes>
+            <Footer />
     </div>
   )
 }

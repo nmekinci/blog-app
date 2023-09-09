@@ -40,9 +40,9 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position='relative' >
     {/* <AppBar position="sticky"> */}
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" >
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography

@@ -9,9 +9,9 @@ const Dashboard = () => {
   return (
     <div>
       
-      <NavBar />
+      
       <BlogCard/>
-      <Footer />
+      
       
     </div>
   );
