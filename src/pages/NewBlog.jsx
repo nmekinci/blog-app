@@ -11,14 +11,14 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField } from "@mui/material";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+// const bull = (
+//   <Box
+//     component="span"
+//     sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
+//   >
+//     •
+//   </Box>
+// );
 
 const NewBlog = () => {
   return (
