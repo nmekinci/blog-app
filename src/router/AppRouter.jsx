@@ -10,6 +10,7 @@ import About from '../pages/About'
 import MyBlog from '../pages/MyBlog'
 import BlogDetail from '../pages/BlogDetail'
 import NotFound from '../pages/NotFound'
+import BlogForm from '../components/blog/BlogForm'
 
 
 const AppRouter = () => {
@@ -25,6 +26,7 @@ const AppRouter = () => {
                 <Route path='/my-blog' element={<MyBlog/>}/>
                 <Route path='/blog-detail' element={<BlogDetail/>}/>
                 <Route path='/details/:id' element={<BlogDetail/>}/>
+                <Route path='/blog-form' element={<BlogForm/>}/>
                 <Route path='*' element={<NotFound/>}/>
 
             </Route>
