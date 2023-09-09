@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { pink } from "@mui/material/colors";
 import CommentForm from "./CommentForm";
 import UpdateModal from "./UpdateModal";
+import Swal from 'sweetalert2'
 
 const BlogForm = () => {
   const [toggle, setToggle] = React.useState(false);
@@ -36,9 +37,30 @@ const BlogForm = () => {
   const handleClick = () => {
     navigate("/my-blog");
   };
+  const handleDelete = () => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+  };
   const handleToggle = () => {
     setToggle(!toggle);
   };
+
+  
   return (
     <Box
       sx={{
@@ -145,8 +167,16 @@ const BlogForm = () => {
             <Button
               size="small"
               variant="contained"
-              color="error"
+            //   color="error"
               onClick={handleClick}
+            >
+              Back
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              color="error"
+              onClick={handleDelete}
             >
               Delete
             </Button>
