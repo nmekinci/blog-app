@@ -7,20 +7,31 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Avatar, Box, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ChatIcon from "@mui/icons-material/Chat";
+import ForumIcon from "@mui/icons-material/Forum";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useNavigate } from "react-router-dom";
 import { pink } from "@mui/material/colors";
+import CommentForm from "../components/blog/CommentForm";
 
 const BlogDetail = () => {
+const [toggle, setToggle] = React.useState(false)
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/");
   };
+  const handleToggle = () => {
+setToggle(!toggle)
+  }
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", m: 3, backgroundColor:"#dede"}}>
-      
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        m: 3,
+        backgroundColor: "#dede",
+      }}
+    >
       <Card
         sx={{
           // maxWidth: 345,
@@ -78,8 +89,8 @@ const BlogDetail = () => {
                 5
               </Typography>
             </IconButton>
-            <IconButton aria-label="favorites" sx={{ gap: 1 }}>
-              <ChatIcon sx={{ mt: 1, width: 18, height: 18 }} />
+            <IconButton aria-label="favorites" sx={{ gap: 1 }} onClick={handleToggle}>
+              <ForumIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
                 5
               </Typography>
@@ -95,6 +106,11 @@ const BlogDetail = () => {
             Back
           </Button>
         </Box>
+        
+        <Box sx={toggle ? {display:"block"} : {display:"none"}}>
+        <CommentForm />
+        </Box>
+        
       </Card>
     </Box>
   );
