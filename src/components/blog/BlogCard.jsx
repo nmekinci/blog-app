@@ -9,10 +9,18 @@ import { Avatar, Box, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatIcon from "@mui/icons-material/Chat";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { useNavigate } from "react-router-dom";
 
 const BlogCard = () => {
+const navigate = useNavigate()
+
+const handleClick = () => {
+navigate("/blog-detail")
+}
+
   return (
     <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
+      BlogCard
       <Card
         sx={{
           maxWidth: 345,
@@ -83,7 +91,7 @@ const BlogCard = () => {
               </Typography>
             </IconButton>
           </Box>
-          <Button size="small" variant="contained" sx={{}}>
+          <Button size="small" variant="contained" onClick={handleClick}>
             Read More
           </Button>
         </Box>
