@@ -1,10 +1,13 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 import Swal from "sweetalert2";
+import { initialAuthState, reducerAuth } from "../reducer/authReducer";
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducerAuth, initialAuthState);
+
   const [currentUser, setCurrentUser] = useState(false);
 
   const url = process.env.REACT_APP_BASE_URL
@@ -26,9 +29,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // loginUser(newuser);
+    loginUser(newuser);
     // createUser(newRegisterUser);
-    logoutUser()
+    // logoutUser()
   }, []);
 
   const createUser = async ( newuser ) => {
@@ -41,9 +44,12 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const loginUser = async (user) => {
+    dispatch({type:"START"})
     try {
       const { data } = await axios.post(`${url}users/auth/login/`, user);
-      console.log(data);
+dispatch({type:"SUCCESS",payload:data})
+      // console.log(data);
+      // console.log(state);
 
       // Swal.fire(
       //   'User Name',
@@ -54,6 +60,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+  // console.log(state);
   const logoutUser = async () => {
     try {
       const { data } = await axios.post(`${url}users/auth/logout/`);
@@ -74,7 +81,8 @@ const AuthContextProvider = ({ children }) => {
   const values = {
     createUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    state
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

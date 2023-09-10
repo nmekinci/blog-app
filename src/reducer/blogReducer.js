@@ -16,17 +16,19 @@ export const initialBlogState = {
   comment_count: 0,
   likes_n: [],
   error: "",
+  // key: "",
+  data: [],
 };
-export const reducer = (initialBlogState, action) => {
-    switch (action.type) {
-        case "START":
-            return {...initialBlogState, loading: true}
-        case "SUCCESS":
-            return {...initialBlogState, loading: false}
-        case "FAIL":
-            return {...initialBlogState, loading: false}
-    
-        default:
-            break;
-    }
-}
+export const reducerBlog = (initialBlogState, action) => {
+  switch (action.type) {
+    case "START":
+      return { ...initialBlogState, loading: true };
+    case "SUCCESS":
+      return { ...initialBlogState, loading: false, data: action.payload };
+    case "FAIL":
+      return { ...initialBlogState, loading: false };
+
+    default:
+      break;
+  }
+};
