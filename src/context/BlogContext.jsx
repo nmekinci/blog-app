@@ -9,3 +9,17 @@
 //   "slug": "string"
 // }
 
+import React, { createContext, useReducer } from "react";
+import { initialBlogState, reducer } from "../reducer/blogReducer";
+
+export const BlogContext = createContext();
+
+const BlogContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialBlogState);
+  const url = process.env.REACT_APP_BASE_URL;
+
+  const values = {};
+  return <BlogContext.Provider value={values}>{children}</BlogContext.Provider>;
+};
+
+export default BlogContextProvider;

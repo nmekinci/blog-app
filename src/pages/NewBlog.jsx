@@ -61,9 +61,12 @@ const NewBlog = () => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={1}>Trivia</MenuItem>
+              <MenuItem value={2}>Travel</MenuItem>
+              <MenuItem value={3}>Web Development</MenuItem>
+              <MenuItem value={4}>AI</MenuItem>
+              <MenuItem value={5}>Science</MenuItem>
+              <MenuItem value={6}>Fashion</MenuItem>
             </Select>
           </FormControl>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
