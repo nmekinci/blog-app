@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField } from "@mui/material";
+import { BlogContext } from "../context/BlogContext";
 
 // const bull = (
 //   <Box
@@ -20,7 +21,42 @@ import { TextField } from "@mui/material";
 //   </Box>
 // );
 
+// {
+  //   "title": "1",
+  //   "content": "1",
+  //   "image": "https://st.depositphotos.com/1023102/1783/i/950/depositphotos_17839035-stock-photo-3d-word-first-on-white.jpg",
+  //   "category": 1,
+  //   "status": "d",
+  //   "slug": ""
+  // }
+
+
+
 const NewBlog = () => {
+const [newBlog, setNewBlog] = React.useState({
+  title: "",
+  content: "",
+  image: "",
+  category: 0,
+  status: "0",
+  slug: "",
+})
+  const {getCategories,createBlog,state} = React.useContext(BlogContext)
+
+  React.useEffect(() => {
+    getCategories()
+  }, [])
+
+  const handleClick = () => {
+    createBlog(newBlog)
+  }
+  const handleChange = (e) => {
+    setNewBlog({...newBlog, [e.target.name]:e.target.value })
+    // console.log(e.target.value);
+  }
+  console.log(newBlog);
+
+  console.log(state.categories); 
   return (
     <Card
       sx={{
@@ -38,12 +74,17 @@ const NewBlog = () => {
             label="Title"
             variant="standard"
             sx={{ m: 1, minWidth: 120 }}
+            onChange={(e) => handleChange(e)}
+            name="title"
+
           />
           <TextField
             id="url"
             label="Image URL"
             variant="standard"
             sx={{ m: 1, minWidth: 120 }}
+            onChange={(e) => handleChange(e)}
+            name="image"
           />
 
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -57,16 +98,21 @@ const NewBlog = () => {
               // onChange={handleChange}
               label="Category"
               // sx={centered}
+              onChange={(e) => handleChange(e)}
+            name="category"
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
+              {state.categories.map( (item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
+              {/* <MenuItem value={1}>Trivia</MenuItem>
+              <MenuItem value={1}>Trivia</MenuItem>
               <MenuItem value={1}>Trivia</MenuItem>
               <MenuItem value={2}>Travel</MenuItem>
               <MenuItem value={3}>Web Development</MenuItem>
               <MenuItem value={4}>AI</MenuItem>
               <MenuItem value={5}>Science</MenuItem>
-              <MenuItem value={6}>Fashion</MenuItem>
+              <MenuItem value={6}>Fashion</MenuItem> */}
             </Select>
           </FormControl>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -79,13 +125,14 @@ const NewBlog = () => {
               // value={age}
               // onChange={handleChange}
               label="Category"
+              onChange={(e) => handleChange(e)}
+            name="status"
             >
-              <MenuItem value="">
+              <MenuItem value="0">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value="d">Draft</MenuItem>
+              <MenuItem value="p">Published</MenuItem>
             </Select>
           </FormControl>
 
@@ -97,6 +144,8 @@ const NewBlog = () => {
             // defaultValue="Default Value"
             variant="standard"
             sx={{ m: 1, minWidth: 120 }}
+            onChange={(e) => handleChange(e)}
+            name="content"
           />
 
           <Button
@@ -104,6 +153,7 @@ const NewBlog = () => {
             size="large"
             color="success"
             sx={{ m: 1, minWidth: 120 }}
+            onClick={handleClick}
           >
             Create New Blog
           </Button>

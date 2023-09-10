@@ -121,7 +121,7 @@ const BlogContextProvider = ({ children }) => {
     // createCategories({
     //   "name": "string"
     // })
-    // getCategories()
+    getCategories()
     // deleteBlog(8)
     // loginUser({
     //   username: "pc117",

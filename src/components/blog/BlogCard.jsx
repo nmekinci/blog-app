@@ -26,7 +26,7 @@ React.useEffect(() => {
 
 }, [])
 
-// console.log(state.data);
+console.log(state.data);
 const handleClick = (id) => {
 navigate("/blog-detail/" + `${id}` + "/")
 console.log(id);
@@ -34,7 +34,7 @@ console.log(id);
 
   return (
 
-    <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
+    <Box sx={{ display: "flex", flexWrap:"wrap", justifyContent: "center", m: 3 }}>
       BlogCard
 
       {state.data.map( item => 
