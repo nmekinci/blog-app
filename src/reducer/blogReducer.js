@@ -18,6 +18,9 @@ export const initialBlogState = {
   error: "",
   // key: "",
   data: [],
+  categories:[],
+  comment:[],
+  like:[],
 };
 export const reducerBlog = (initialBlogState, action) => {
   switch (action.type) {
@@ -25,6 +28,12 @@ export const reducerBlog = (initialBlogState, action) => {
       return { ...initialBlogState, loading: true };
     case "SUCCESS":
       return { ...initialBlogState, loading: false, data: action.payload };
+    case "SUCCESS-CAT":
+      return { ...initialBlogState, loading: false, categories: action.payload };
+    case "SUCCESS-COM":
+      return { ...initialBlogState, loading: false, comment: action.payload };
+    case "SUCCESS-LIKE":
+      return { ...initialBlogState, loading: false, like: action.payload };
     case "FAIL":
       return { ...initialBlogState, loading: false };
 
