@@ -35,6 +35,8 @@ setToggle(!toggle)
     // getBlogWithId(id)
   }, [])
   console.log(state.data);
+  const detailData = state.data.filter( (item) => item.id == id)[0]
+  console.log(detailData);
   return (
     <Box
       sx={{
@@ -53,8 +55,8 @@ setToggle(!toggle)
       >
         <CardMedia
           sx={{ height: 140 }}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="green iguana"
+          image={detailData.image}
+          title={detailData.title}
         />
         <CardContent>
           <Typography
@@ -63,22 +65,21 @@ setToggle(!toggle)
             component="div"
             sx={{ textAlign: "center" }}
           >
-            Title
+            {detailData.title}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ textAlign: "justify" }}
           >
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {detailData.content}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ mt: 1, textAlign: "justify" }}
           >
-            Date & Time
+            {detailData.publish_date}
           </Typography>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Avatar
@@ -86,7 +87,7 @@ setToggle(!toggle)
               sx={{ mt: 1, width: 24, height: 24, bgcolor: pink[500] }}
             />
             <Typography variant="body2" sx={{ mt: 1, textAlign: "justify" }}>
-              Admin
+            {detailData.author}
             </Typography>
           </Box>
         </CardContent>
@@ -98,19 +99,19 @@ setToggle(!toggle)
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-                5
+              {detailData.likes}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }} onClick={handleToggle}>
               <ForumIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-                5
+              {detailData.comment_count}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <RemoveRedEyeIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-                5
+              {detailData.post_views}
               </Typography>
             </IconButton>
           </Box>
