@@ -80,7 +80,11 @@ import { initialBlogState, reducerBlog } from "../reducer/blogReducer";
 import axios from "axios";
 import useAxios from "../service/useAxios";
 import { AuthContext } from "./AuthContext";
+
+
 export const BlogContext = createContext();
+
+
 const BlogContextProvider = ({ children }) => {
   const url = process.env.REACT_APP_BASE_URL;
   const { state: authState, loginUser } = useContext(AuthContext);
@@ -155,11 +159,13 @@ const BlogContextProvider = ({ children }) => {
     try {
       const { data } = await axiosPublic.get(`${url}api/blogs/`);
       dispatch({ type: "SUCCESS", payload: data });
+      // console.log(data);
     } catch (error) {
       dispatch({ type: "FAIL", payload: error });
       console.log(error);
     }
   };
+  // console.log(state);
   const getcomments = async (id) => {
     dispatch({ type: "START" });
 
@@ -310,7 +316,7 @@ const BlogContextProvider = ({ children }) => {
     }
   };
 
-  console.log(state);
+  // console.log(state);
   const values = {
     getBlogs,
     getBlogWithId,
@@ -326,6 +332,7 @@ const BlogContextProvider = ({ children }) => {
     getlikes,
     postComments,
     postLikes,
+    state,
   };
   return <BlogContext.Provider value={values}>{children}</BlogContext.Provider>;
 };

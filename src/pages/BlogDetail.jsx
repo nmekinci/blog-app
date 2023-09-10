@@ -9,11 +9,18 @@ import { Avatar, Box, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ForumIcon from "@mui/icons-material/Forum";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { pink } from "@mui/material/colors";
 import CommentForm from "../components/blog/CommentForm";
+import { BlogContext } from "../context/BlogContext";
 
 const BlogDetail = () => {
+  const {id} = useParams()
+
+  console.log(id);
+
+
+  const {getBlogWithId,state} = React.useContext(BlogContext)
 const [toggle, setToggle] = React.useState(false)
   const navigate = useNavigate();
 
@@ -23,6 +30,11 @@ const [toggle, setToggle] = React.useState(false)
   const handleToggle = () => {
 setToggle(!toggle)
   }
+
+  React.useEffect(() => {
+    // getBlogWithId(id)
+  }, [])
+  console.log(state.data);
   return (
     <Box
       sx={{

@@ -10,18 +10,37 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatIcon from "@mui/icons-material/Chat";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useNavigate } from "react-router-dom";
+import { BlogContext } from "../../context/BlogContext";
+import { initialBlogState, reducerBlog } from "../../reducer/blogReducer";
 
 const BlogCard = () => {
 const navigate = useNavigate()
 
-const handleClick = () => {
-navigate("/blog-detail")
+const {getBlogs,state} = React.useContext(BlogContext)
+// const [state, dispatch] = React.useReducer(reducerBlog, initialBlogState);
+
+
+React.useEffect(() => {
+  getBlogs()
+// console.log(state.data);
+
+}, [])
+
+// console.log(state.data);
+const handleClick = (id) => {
+navigate("/blog-detail/" + `${id}` + "/")
+console.log(id);
 }
 
   return (
+
     <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
       BlogCard
-      <Card
+
+      {state.data.map( item => 
+      (
+        <Card
+        key={item.id}
         sx={{
           maxWidth: 345,
           m: 2,
@@ -30,8 +49,8 @@ navigate("/blog-detail")
       >
         <CardMedia
           sx={{ height: 140 }}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="green iguana"
+          image={item.image}
+          title={item.author}
         />
         <CardContent>
           <Typography
@@ -40,22 +59,21 @@ navigate("/blog-detail")
             component="div"
             sx={{ textAlign: "center" }}
           >
-            Title
+            {item.title}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ textAlign: "justify" }}
           >
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
+            {item.content}
+            </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ mt: 1, textAlign: "justify" }}
           >
-            Date & Time
+            {item.publish_date}
           </Typography>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Avatar
@@ -63,7 +81,7 @@ navigate("/blog-detail")
               sx={{ mt: 1, width: 24, height: 24 }}
             />
             <Typography variant="body2" sx={{ mt: 1, textAlign: "justify" }}>
-              Admin
+              {item.author}
             </Typography>
           </Box>
         </CardContent>
@@ -75,27 +93,31 @@ navigate("/blog-detail")
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-                5
+                {item.likes}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <ChatIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-                5
+                {item.comment_count}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <RemoveRedEyeIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-                5
+                {item.post_views}
               </Typography>
             </IconButton>
           </Box>
-          <Button size="small" variant="contained" onClick={handleClick}>
+          <Button size="small" variant="contained" onClick={() => navigate("/details/" + item.id + "/")}>
+          {/* <Button size="small" variant="contained" onClick={() => handleClick(item.id)}> */}
             Read More
           </Button>
         </Box>
       </Card>
+
+      ))}
+      
     </Box>
   );
 };
