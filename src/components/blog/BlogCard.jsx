@@ -27,6 +27,8 @@ React.useEffect(() => {
 }, [])
 const handleClick = (e) => {
   postLikes(e)
+  // getBlogs()
+
 }
 
 // console.log(state.data);
@@ -34,7 +36,7 @@ const handleClick = (e) => {
 // navigate("/blog-detail/" + `${id}` + "/")
 // console.log(id);
 // }
-
+// console.log(state.data);
   return (
 
     <Box sx={{ display: "flex", flexWrap:"wrap", justifyContent: "center", m: 3 }}>
@@ -94,7 +96,10 @@ const handleClick = (e) => {
         >
           <Box sx={{ gap: 2 }}>
             <IconButton aria-label="favorites" sx={{ gap: 1 }} onClick={() => handleClick(item.id)}>
-              <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
+              <FavoriteIcon sx={{ mt: 1, width: 18, height: 18, 
+              //! color: item.likes_n.some(i => i.user_id === currentUser.id) ? "red" : ""
+              //! the above line will provide us if the user click the like button like button will appear red else default
+              }}  />
               <Typography variant="body2" sx={{ mt: 1 }}>
                 {item.likes}
               </Typography>

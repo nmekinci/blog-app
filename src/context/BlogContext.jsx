@@ -204,7 +204,8 @@ const BlogContextProvider = ({ children }) => {
 
     try {
       const { data } = await axiosWithKey.post(`${url}api/likes/${id}/`);
-      dispatch({ type: "SUCCESS-COM", payload: data });
+      dispatch({ type: "SUCCESS-LIKE", payload: data });
+      getBlogs()
     } catch (error) {
       dispatch({ type: "FAIL", payload: error });
       console.log(error);
