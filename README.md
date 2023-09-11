@@ -1,4 +1,9 @@
 # Blog App
+
+https://nmekinci.github.io/blog-app/
+
+still under construction ....
+
 I will create this project with react and context structure. It will include various library as well. 
 
 yarn add formik
