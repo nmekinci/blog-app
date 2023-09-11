@@ -16,7 +16,7 @@ import { initialBlogState, reducerBlog } from "../../reducer/blogReducer";
 const BlogCard = () => {
 const navigate = useNavigate()
 
-const {getBlogs,state} = React.useContext(BlogContext)
+const {getBlogs,postLikes,state} = React.useContext(BlogContext)
 // const [state, dispatch] = React.useReducer(reducerBlog, initialBlogState);
 
 
@@ -25,12 +25,15 @@ React.useEffect(() => {
 // console.log(state.data);
 
 }, [])
-
-console.log(state.data);
-const handleClick = (id) => {
-navigate("/blog-detail/" + `${id}` + "/")
-console.log(id);
+const handleClick = (e) => {
+  postLikes(e)
 }
+
+// console.log(state.data);
+// const handleClick = (id) => {
+// navigate("/blog-detail/" + `${id}` + "/")
+// console.log(id);
+// }
 
   return (
 
@@ -90,7 +93,7 @@ console.log(id);
           sx={{ display: "flex", justifyContent: "space-between", padding: 2 }}
         >
           <Box sx={{ gap: 2 }}>
-            <IconButton aria-label="favorites" sx={{ gap: 1 }}>
+            <IconButton aria-label="favorites" sx={{ gap: 1 }} onClick={() => handleClick(item.id)}>
               <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
                 {item.likes}

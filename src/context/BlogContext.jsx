@@ -203,7 +203,7 @@ const BlogContextProvider = ({ children }) => {
     dispatch({ type: "START" });
 
     try {
-      const { data } = await axiosPublic.post(`${url}api/likes/${id}/`);
+      const { data } = await axiosWithKey.post(`${url}api/likes/${id}/`);
       dispatch({ type: "SUCCESS-COM", payload: data });
     } catch (error) {
       dispatch({ type: "FAIL", payload: error });
