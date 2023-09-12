@@ -13,29 +13,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import { pink } from "@mui/material/colors";
 import CommentForm from "../components/blog/CommentForm";
 import { BlogContext } from "../context/BlogContext";
+import { AuthContext } from "../context/AuthContext";
 
 const BlogDetail = () => {
-  const {id} = useParams()
+  const { id } = useParams();
 
   // console.log(id);
-
-
-  const {getBlogWithId,state} = React.useContext(BlogContext)
-const [toggle, setToggle] = React.useState(false)
+  const { state: authState } = React.useContext(AuthContext);
+  const { getBlogWithId, state } = React.useContext(BlogContext);
+  const [toggle, setToggle] = React.useState(false);
   const navigate = useNavigate();
+
+  console.log(authState?.user?.id);
+  // console.log(detailData?.id);
 
   const handleClick = () => {
     navigate("/");
   };
   const handleToggle = () => {
-setToggle(!toggle)
-  }
+    setToggle(!toggle);
+  };
 
   React.useEffect(() => {
     // getBlogWithId(id)
-  }, [])
+  }, []);
   // console.log(state.data);
-  const detailData = state.data.filter( (item) => item.id == id)[0]
+  const detailData = state.data.filter((item) => item.id == id)[0];
   // console.log(detailData);
   return (
     <Box
@@ -88,7 +91,7 @@ setToggle(!toggle)
               sx={{ mt: 1, width: 24, height: 24, bgcolor: pink[500] }}
             />
             <Typography variant="body2" sx={{ mt: 1, textAlign: "justify" }}>
-            {detailData?.author}
+              {detailData?.author}
             </Typography>
           </Box>
         </CardContent>
@@ -100,19 +103,23 @@ setToggle(!toggle)
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-              {detailData?.likes}
+                {detailData?.likes}
               </Typography>
             </IconButton>
-            <IconButton aria-label="favorites" sx={{ gap: 1 }} onClick={handleToggle}>
+            <IconButton
+              aria-label="favorites"
+              sx={{ gap: 1 }}
+              onClick={handleToggle}
+            >
               <ForumIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-              {detailData?.comment_count}
+                {detailData?.comment_count}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <RemoveRedEyeIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-              {detailData?.post_views}
+                {detailData?.post_views}
               </Typography>
             </IconButton>
           </Box>
@@ -120,11 +127,25 @@ setToggle(!toggle)
             Back
           </Button>
         </Box>
-        
-        <Box sx={toggle ? {display:"block"} : {display:"none"}}>
-        <CommentForm id={id} />
+        <Box
+          sx={
+            {margin:2,}
+          //   detailData?.id == authState?.user?.id
+          //     ? { display: "block" }
+          //     : { display: "none" }
+          }
+        >
+          <Button size="small" variant="contained" color="success">
+            Update
+          </Button>
+          <Button size="small" variant="contained" color="warning">
+            Delete
+          </Button>
         </Box>
-        
+
+        <Box sx={toggle ? { display: "block" } : { display: "none" }}>
+          <CommentForm id={id} />
+        </Box>
       </Card>
     </Box>
   );

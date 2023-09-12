@@ -12,6 +12,7 @@ import NotFound from "../pages/NotFound";
 import BlogForm from "../components/blog/BlogForm";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import Register from "../components/auth/Register";
 
 const AppRouter = () => {
   return (
@@ -20,6 +21,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" index element={<Dashboard />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/register" element={<Register />} />
         <Route element={<PrivateRouter />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/new-blog" element={<NewBlog />} />

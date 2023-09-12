@@ -10,13 +10,20 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { Formik, Form } from "formik"
 import { object, string } from "yup"
+import { Link } from "react-router-dom"
+import  {  useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+
 // import { login } from "../hooks/useAuthCall"
 // import useAuthCall from "../hooks/useAuthCall"
 
 const Login = () => {
 //   const { login } = useAuthCall()
+const { state: authState, loginUser } = useContext(AuthContext);
 
-  //? harici validasyon şemasi
+
+  //? external validasyon schema
   const loginSchema = object({
     email: string()
       .email("Email is not VALID")
@@ -44,7 +51,7 @@ const Login = () => {
       >
         <Grid item xs={12} mb={3}>
           <Typography variant="h3" color="primary" align="center">
-            STOCK APP
+            BLOG APP
           </Typography>
         </Grid>
 
@@ -72,7 +79,7 @@ const Login = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, action) => {
-            //   login(values)
+              loginUser(values)
               action.resetForm()
               action.setSubmitting(false)
             }}
@@ -113,7 +120,7 @@ const Login = () => {
           </Formik>
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
-            {/* <Link to="/register">Do you have not an account?</Link> */}
+            <Link to="/register">Do you have NOT an account?</Link>
           </Box>
         </Grid>
 

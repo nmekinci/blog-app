@@ -10,6 +10,7 @@ import Box from "@mui/material/Box"
 import { Formik } from "formik"
 // import useAuthCall from "../hooks/useAuthCall"
 import RegisterForm, { registerSchema } from "./RegisterForm"
+import { Link } from "react-router-dom"
 
 const Register = () => {
 //   const { register } = useAuthCall()
@@ -71,7 +72,7 @@ const Register = () => {
           ></Formik>
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
-            {/* <Link to="/">Do you have an account?</Link> */}
+            <Link to="/auth">Do you have an account?</Link>
           </Box>
         </Grid>
 

@@ -2,15 +2,30 @@ import axios from "axios";
 import React, { createContext, useEffect, useReducer, useState } from "react";
 import Swal from "sweetalert2";
 import { initialAuthState, reducerAuth } from "../reducer/authReducer";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducerAuth, initialAuthState);
 
-  const [currentUser, setCurrentUser] = useState(false);
+  const navigate = useNavigate();
 
-  const url = process.env.REACT_APP_BASE_URL
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedCurrentUser = sessionStorage.getItem(
+      "Blog-app-savedCurrentUser"
+    );
+    return savedCurrentUser
+      ? JSON.parse(savedCurrentUser)
+      : {
+          key: "",
+          user: {},
+          loading: false,
+          error: "",
+        };
+  });
+
+  const url = process.env.REACT_APP_BASE_URL;
 
   const newuser = {
     username: "pc117",
@@ -29,12 +44,13 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loginUser(newuser);
+    sessionStorage.setItem("Blog-app-savedCurrentUser", JSON.stringify(currentUser))
+    // loginUser(newuser);
     // createUser(newRegisterUser);
     // logoutUser()
-  }, []);
+  }, [currentUser]);
 
-  const createUser = async ( newuser ) => {
+  const createUser = async (newuser) => {
     try {
       const { data } = await axios.post(`${url}users/register/`, newuser);
       console.log(data);
@@ -44,23 +60,21 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const loginUser = async (user) => {
-    dispatch({type:"START"})
+    dispatch({ type: "START" });
     try {
       const { data } = await axios.post(`${url}users/auth/login/`, user);
-dispatch({type:"SUCCESS",payload:data})
+      dispatch({ type: "SUCCESS", payload: data });
       // console.log(data);
       // console.log(state);
-
-      // Swal.fire(
-      //   'User Name',
-      //   'Logged in succesfully',
-      //   'question'
-      // )
+      setCurrentUser(data);
+      Swal.fire(`${data?.user?.username}`, "Logged in succesfully", "question");
+      // console.log(state);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log(state);
+  console.log(state);
   const logoutUser = async () => {
     try {
       const { data } = await axios.post(`${url}users/auth/logout/`);
@@ -75,14 +89,13 @@ dispatch({type:"SUCCESS",payload:data})
       console.log(error);
     }
   };
-
-
-
+  console.log(currentUser);
   const values = {
     createUser,
     loginUser,
     logoutUser,
-    state
+    currentUser,
+    state,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
