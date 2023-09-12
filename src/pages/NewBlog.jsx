@@ -37,8 +37,8 @@ const [newBlog, setNewBlog] = React.useState({
   title: "",
   content: "",
   image: "",
-  category: 0,
-  status: "0",
+  category: "",
+  status: "",
   slug: "",
 })
   const {getCategories,createBlog,state} = React.useContext(BlogContext)
@@ -49,6 +49,14 @@ const [newBlog, setNewBlog] = React.useState({
 
   const handleClick = () => {
     createBlog(newBlog)
+    setNewBlog({
+      title: "",
+      content: "",
+      image: "",
+      category: "",
+      status: "",
+      slug: "",
+    })
   }
   const handleChange = (e) => {
     setNewBlog({...newBlog, [e.target.name]:e.target.value })
@@ -76,7 +84,7 @@ const [newBlog, setNewBlog] = React.useState({
             sx={{ m: 1, minWidth: 120 }}
             onChange={(e) => handleChange(e)}
             name="title"
-
+            value={newBlog?.title}
           />
           <TextField
             id="url"
@@ -85,6 +93,7 @@ const [newBlog, setNewBlog] = React.useState({
             sx={{ m: 1, minWidth: 120 }}
             onChange={(e) => handleChange(e)}
             name="image"
+            value={newBlog?.image}
           />
 
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -100,8 +109,9 @@ const [newBlog, setNewBlog] = React.useState({
               // sx={centered}
               onChange={(e) => handleChange(e)}
             name="category"
+            value={newBlog?.category}
             >
-              <MenuItem value="">
+              <MenuItem value="0">
                 <em>None</em>
               </MenuItem>
               {state.categories.map( (item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
@@ -127,6 +137,7 @@ const [newBlog, setNewBlog] = React.useState({
               label="Category"
               onChange={(e) => handleChange(e)}
             name="status"
+            value={newBlog?.status}
             >
               <MenuItem value="0">
                 <em>None</em>
@@ -146,9 +157,19 @@ const [newBlog, setNewBlog] = React.useState({
             sx={{ m: 1, minWidth: 120 }}
             onChange={(e) => handleChange(e)}
             name="content"
+            value={newBlog?.content}
           />
 
           <Button
+          disabled={ //! let use here yup or formik for validation
+            newBlog?.title?.trim() && 
+            newBlog?.content?.trim() && 
+            newBlog?.image?.trim() && 
+            newBlog?.category !== "" && newBlog?.category != "0" &&
+            newBlog?.status?.trim() && newBlog?.status != "0" 
+            ?
+            false : true
+          }
             variant="contained"
             size="large"
             color="success"

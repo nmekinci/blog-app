@@ -281,12 +281,11 @@ const BlogContextProvider = ({ children }) => {
   };
   const createBlog = async (newBlog) => {
     dispatch({ type: "START" });
-    // console.log(state);
     try {
       const { data } = await axiosWithKey.post(`api/blogs/`, newBlog);
-      dispatch({ type: "SUCCESS", payload: data });
-      // console.log(data);
-      // console.log(state);
+      // dispatch({ type: "SUCCESS", payload: data });
+      dispatch({ type: "SUCCESS"});
+      getBlogs()
     } catch (error) {
       dispatch({ type: "FAIL", payload: error });
       console.log(error);

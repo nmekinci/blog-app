@@ -98,7 +98,7 @@ const CommentForm = ({ id }) => {
           sx={{ display: "flex", justifyContent: "center", margin: 2 }}
         >
           <Button
-          disabled={comment?.content.trim() ? false : true} //! i liked it
+          disabled={comment?.content?.trim() ? false : true} //! i liked it
             size="small"
             variant="contained"
             color="success"
