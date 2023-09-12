@@ -170,7 +170,7 @@ const BlogContextProvider = ({ children }) => {
     dispatch({ type: "START" });
 
     try {
-      const { data } = await axiosPublic.get(`${url}api/comments/${id}/`);
+      const { data } = await axiosWithKey.get(`${url}api/comments/${id}/`);
       dispatch({ type: "SUCCESS-COM", payload: data });
     } catch (error) {
       dispatch({ type: "FAIL", payload: error });
@@ -188,12 +188,14 @@ const BlogContextProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const postComments = async (id) => {
+  const postComments = async (id, comment) => {
     dispatch({ type: "START" });
 
     try {
-      const { data } = await axiosPublic.post(`${url}api/comments/${id}/`);
-      dispatch({ type: "SUCCESS-COM", payload: data });
+      const { data } = await axiosWithKey.post(`${url}api/comments/${id}/`, comment);
+      // dispatch({ type: "SUCCESS-COM", payload: data });
+      dispatch({ type: "SUCCESS-COM"});
+      getcomments(id)
     } catch (error) {
       dispatch({ type: "FAIL", payload: error });
       console.log(error);

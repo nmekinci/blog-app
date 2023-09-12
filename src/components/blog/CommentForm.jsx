@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
+import { BlogContext } from "../../context/BlogContext";
 
 // const bull = (
 //   <Box
@@ -16,10 +17,30 @@ import { TextField } from "@mui/material";
 //   </Box>
 // );
 
-const CommentForm = () => {
+const CommentForm = ({ id }) => {
+  const { postComments, getcomments, state } = React.useContext(BlogContext);
+
+  const [comment, setComment] = React.useState({
+    post: id,
+    content: "",
+  });
+
+  React.useEffect(() => {
+    getcomments(id);
+  }, []);
+
+  const handleClick = () => {
+    postComments(id, comment);
+  };
+  const handleChange = (e) => {
+    setComment({ ...comment, [e.target.name]: e.target.value });
+  };
+  // console.log(comment);
+  console.log(state.comment);
+
   return (
     <Card sx={{ maxWidth: 500, margin: "auto", mb: 1 }}>
-      <CardContent>
+      {/* <CardContent>
         <hr />
         <Typography variant="body2" color="text.secondary">
           User Name
@@ -34,8 +55,28 @@ const CommentForm = () => {
         </Typography>
       </CardContent>
       <hr />
-      <hr />
+      <hr /> */}
+      {state?.comment?.map((item) => (
+        <>
+          <hr />
 
+          <CardContent
+            key={item?.id}
+            sx={{ minWidth: 300, margin: "auto", mb: 1 }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {item?.user}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {item?.time_stamp}
+            </Typography>
+            <Typography variant="body2" sx={{ textAlign: "justify" }}>
+              {item?.content}
+            </Typography>
+          </CardContent>
+        </>
+      ))}
+      <hr />
       <Box sx={{ textAlign: "center" }}>
         <TextField
           id="standard-multiline-static"
@@ -45,6 +86,8 @@ const CommentForm = () => {
           // defaultValue="Default Value"
           variant="standard"
           sx={{ width: "95%" }}
+          onChange={(e) => handleChange(e)}
+          name="content"
         />
         <CardActions
           sx={{ display: "flex", justifyContent: "center", margin: 2 }}
@@ -54,6 +97,7 @@ const CommentForm = () => {
             variant="contained"
             color="success"
             sx={{ width: "90%" }}
+            onClick={handleClick}
           >
             Add Comment
           </Button>

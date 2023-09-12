@@ -17,7 +17,7 @@ import { BlogContext } from "../context/BlogContext";
 const BlogDetail = () => {
   const {id} = useParams()
 
-  console.log(id);
+  // console.log(id);
 
 
   const {getBlogWithId,state} = React.useContext(BlogContext)
@@ -34,9 +34,9 @@ setToggle(!toggle)
   React.useEffect(() => {
     // getBlogWithId(id)
   }, [])
-  console.log(state.data);
+  // console.log(state.data);
   const detailData = state.data.filter( (item) => item.id == id)[0]
-  console.log(detailData);
+  // console.log(detailData);
   return (
     <Box
       sx={{
@@ -45,6 +45,7 @@ setToggle(!toggle)
         m: 3,
         backgroundColor: "#dede",
       }}
+      key={detailData?.id}
     >
       <Card
         sx={{
@@ -55,8 +56,8 @@ setToggle(!toggle)
       >
         <CardMedia
           sx={{ height: 140 }}
-          image={detailData.image}
-          title={detailData.title}
+          image={detailData?.image}
+          title={detailData?.title}
         />
         <CardContent>
           <Typography
@@ -65,21 +66,21 @@ setToggle(!toggle)
             component="div"
             sx={{ textAlign: "center" }}
           >
-            {detailData.title}
+            {detailData?.title}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ textAlign: "justify" }}
           >
-            {detailData.content}
+            {detailData?.content}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ mt: 1, textAlign: "justify" }}
           >
-            {detailData.publish_date}
+            {detailData?.publish_date}
           </Typography>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Avatar
@@ -87,7 +88,7 @@ setToggle(!toggle)
               sx={{ mt: 1, width: 24, height: 24, bgcolor: pink[500] }}
             />
             <Typography variant="body2" sx={{ mt: 1, textAlign: "justify" }}>
-            {detailData.author}
+            {detailData?.author}
             </Typography>
           </Box>
         </CardContent>
@@ -99,19 +100,19 @@ setToggle(!toggle)
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-              {detailData.likes}
+              {detailData?.likes}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }} onClick={handleToggle}>
               <ForumIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-              {detailData.comment_count}
+              {detailData?.comment_count}
               </Typography>
             </IconButton>
             <IconButton aria-label="favorites" sx={{ gap: 1 }}>
               <RemoveRedEyeIcon sx={{ mt: 1, width: 18, height: 18 }} />
               <Typography variant="body2" sx={{ mt: 1 }}>
-              {detailData.post_views}
+              {detailData?.post_views}
               </Typography>
             </IconButton>
           </Box>
@@ -121,7 +122,7 @@ setToggle(!toggle)
         </Box>
         
         <Box sx={toggle ? {display:"block"} : {display:"none"}}>
-        <CommentForm />
+        <CommentForm id={id} />
         </Box>
         
       </Card>
