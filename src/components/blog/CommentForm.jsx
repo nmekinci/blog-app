@@ -31,6 +31,10 @@ const CommentForm = ({ id }) => {
 
   const handleClick = () => {
     postComments(id, comment);
+    setComment({
+      post: id,
+      content: "",
+    })
   };
   const handleChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
@@ -88,11 +92,13 @@ const CommentForm = ({ id }) => {
           sx={{ width: "95%" }}
           onChange={(e) => handleChange(e)}
           name="content"
+          value={comment?.content}
         />
         <CardActions
           sx={{ display: "flex", justifyContent: "center", margin: 2 }}
         >
           <Button
+          disabled={comment?.content.trim() ? false : true} //! i liked it
             size="small"
             variant="contained"
             color="success"
