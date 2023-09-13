@@ -26,19 +26,19 @@ const Register = () => {
         direction="row"
         // rowSpacing={{ sm: 3 }}
         sx={{
-          height: "100vh",
+          minHeight: "100vh",
           p: 2,
           maxWidth: "600px",
-          margin:"auto"
+          margin:"20px auto"
         }}
       >
-        <Grid item xs={12}>
+        <Grid item>
           <Typography variant="h3" color="primary" align="center">
             Blog APP
           </Typography>
         </Grid>
 
-        <Grid item xs={12} sm={10} md={6}>
+        <Grid item xs={8} sm={9} md={10} lg={11} xl={12} >
           <Avatar
             sx={{
               backgroundColor: "secondary.light",

@@ -35,9 +35,9 @@ const RegisterForm = ({
   handleBlur,
 }) => {
   return (
-    <Box sx={{backgroundColor:"red", margin:2}}>
-      <Form>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Box>
+      <Form >
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2}}>
           <TextField
             label="User Name"
             name="username"
