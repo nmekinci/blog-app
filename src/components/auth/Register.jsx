@@ -11,26 +11,30 @@ import { Formik } from "formik"
 // import useAuthCall from "../hooks/useAuthCall"
 import RegisterForm, { registerSchema } from "./RegisterForm"
 import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { AuthContext } from "../../context/AuthContext"
 
 const Register = () => {
 //   const { register } = useAuthCall()
-  const { register } = {}
+  const {createUser} = useContext(AuthContext)
 
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Grid
         container
         justifyContent="center"
-        direction="row-reverse"
-        rowSpacing={{ sm: 3 }}
+        direction="row"
+        // rowSpacing={{ sm: 3 }}
         sx={{
           height: "100vh",
           p: 2,
+          maxWidth: "600px",
+          margin:"auto"
         }}
       >
         <Grid item xs={12}>
           <Typography variant="h3" color="primary" align="center">
-            STOCK APP
+            Blog APP
           </Typography>
         </Grid>
 
@@ -60,11 +64,15 @@ const Register = () => {
               first_name: "",
               last_name: "",
               email: "",
+              image:"",
+              bio:"",
               password: "",
+              password2: "",
             }}
             validationSchema={registerSchema}
             onSubmit={(values, actions) => {
-              register({ ...values, password2: values.password })
+              console.log(values);
+              createUser(values)
               actions.resetForm()
               actions.setSubmitting(false)
             }}
@@ -74,12 +82,6 @@ const Register = () => {
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Link to="/auth">Do you have an account?</Link>
           </Box>
-        </Grid>
-
-        <Grid item xs={0} sm={7} md={6}>
-          <Container>
-            {/* <img src={image} alt="" /> */}
-          </Container>
         </Grid>
       </Grid>
     </Container>

@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
+import zIndex from "@mui/material/styles/zIndex"
 import { Form } from "formik"
 import { object, string } from "yup"
 
@@ -34,7 +35,7 @@ const RegisterForm = ({
   handleBlur,
 }) => {
   return (
-    <div>
+    <Box sx={{backgroundColor:"red", margin:2}}>
       <Form>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
@@ -86,7 +87,31 @@ const RegisterForm = ({
             helperText={errors.email}
           />
           <TextField
-            label="password"
+            label="Image"
+            name="image"
+            id="image"
+            type="text"
+            variant="outlined"
+            value={values.image}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.image && Boolean(errors.image)}
+            helperText={errors.image}
+          />
+          <TextField
+            label="Bio"
+            name="bio"
+            id="bio"
+            type="text"
+            variant="outlined"
+            value={values.bio}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.bio && Boolean(errors.bio)}
+            helperText={errors.bio}
+          />
+          <TextField
+            label="Password"
             name="password"
             id="password"
             type="password"
@@ -97,12 +122,24 @@ const RegisterForm = ({
             error={touched.password && Boolean(errors.password)}
             helperText={errors.password}
           />
+          <TextField
+            label="Password Again"
+            name="password2"
+            id="password2"
+            type="password"
+            variant="outlined"
+            value={values.password2}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.password2 && Boolean(errors.password2)}
+            helperText={errors.password2}
+          />
           <Button type="submit" variant="contained" size="large">
             Submit
           </Button>
         </Box>
       </Form>
-    </div>
+    </Box>
   )
 }
 

@@ -1,33 +1,29 @@
-import Avatar from "@mui/material/Avatar"
-import Container from "@mui/material/Container"
-import Grid from "@mui/material/Grid"
-import Typography from "@mui/material/Typography"
-import LockIcon from "@mui/icons-material/Lock"
+import Avatar from "@mui/material/Avatar";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import LockIcon from "@mui/icons-material/Lock";
 // import image from "../assets/result.svg"
 // import { Link } from "react-router-dom"
-import Box from "@mui/material/Box"
-import TextField from "@mui/material/TextField"
-import Button from "@mui/material/Button"
-import { Formik, Form } from "formik"
-import { object, string } from "yup"
-import { Link } from "react-router-dom"
-import  {  useContext } from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { Formik, Form } from "formik";
+import { object, string } from "yup";
+import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
 
 // import { login } from "../hooks/useAuthCall"
 // import useAuthCall from "../hooks/useAuthCall"
 
 const Login = () => {
-//   const { login } = useAuthCall()
-const { state: authState, loginUser } = useContext(AuthContext);
-
+  //   const { login } = useAuthCall()
+  const { state: authState, loginUser,logoutUser } = useContext(AuthContext);
 
   //? external validasyon schema
   const loginSchema = object({
-    email: string()
-      .email("Email is not VALID")
-      .required("REquired Area"),
+    email: string().email("Email is not VALID").required("REquired Area"),
     password: string()
       .required("Required Area")
       .min(8, "At least 8 Chars")
@@ -36,17 +32,23 @@ const { state: authState, loginUser } = useContext(AuthContext);
       .matches(/[a-z]/, "At least include a lowercase letter")
       .matches(/[A-Z]/, "At least include an uppercase letter")
       .matches(/[!,?{}><%&$#£+-.]+/, "At least include a special char"),
-  })
+  });
+  useEffect(() => {
+    logoutUser()
+  }, [])
+  
 
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Grid
         container
         justifyContent="center"
-        direction="row-reverse"
+        direction="row"
         sx={{
           height: "100vh",
           p: 2,
+          maxWidth: "600px",
+          margin: "auto",
         }}
       >
         <Grid item xs={12} mb={3}>
@@ -55,7 +57,7 @@ const { state: authState, loginUser } = useContext(AuthContext);
           </Typography>
         </Grid>
 
-        <Grid item xs={12} sm={10} md={6}>
+        <Grid item xs={12} sm={10} md={12}>
           <Avatar
             sx={{
               backgroundColor: "secondary.light",
@@ -79,9 +81,9 @@ const { state: authState, loginUser } = useContext(AuthContext);
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, action) => {
-              loginUser(values)
-              action.resetForm()
-              action.setSubmitting(false)
+              loginUser(values);
+              action.resetForm();
+              action.setSubmitting(false);
             }}
           >
             {({ handleChange, handleBlur, values, touched, errors }) => (
@@ -123,15 +125,9 @@ const { state: authState, loginUser } = useContext(AuthContext);
             <Link to="/register">Do you have NOT an account?</Link>
           </Box>
         </Grid>
-
-        <Grid item xs={10} sm={7} md={6}>
-          <Container>
-            {/* <img src={image} alt="img" /> */}
-          </Container>
-        </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

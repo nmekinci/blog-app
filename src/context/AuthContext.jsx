@@ -44,16 +44,27 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    sessionStorage.setItem("Blog-app-savedCurrentUser", JSON.stringify(currentUser))
+    sessionStorage.setItem(
+      "Blog-app-savedCurrentUser",
+      JSON.stringify(currentUser)
+    );
     // loginUser(newuser);
     // createUser(newRegisterUser);
     // logoutUser()
   }, [currentUser]);
 
   const createUser = async (newuser) => {
+    // console.log(newuser);
     try {
       const { data } = await axios.post(`${url}users/register/`, newuser);
-      console.log(data);
+      // console.log(data);
+      // loginUser({username:newUser?.username,email: newUser?.email, password: newUser?.password })
+      const LoginData = {
+        username: newuser.username,
+        email: newuser.email,
+        password: newuser.password,
+      };
+      loginUser(LoginData);
     } catch (error) {
       console.log(error);
     }
@@ -79,12 +90,17 @@ const AuthContextProvider = ({ children }) => {
     try {
       const { data } = await axios.post(`${url}users/auth/logout/`);
       console.log(data);
-
-      // Swal.fire(
-      //   'User Name',
-      //   'Logged in succesfully',
-      //   'question'
-      // )
+      // currentUser?.key ? Swal.fire("Logged Out succesfully") : null;
+      if (currentUser?.key != ""){
+        Swal.fire("Logged Out succesfully")
+      }
+      setCurrentUser({
+        key: "",
+        user: {},
+        loading: false,
+        error: "",
+      });
+      // Swal.fire("Logged Out succesfully");
     } catch (error) {
       console.log(error);
     }
