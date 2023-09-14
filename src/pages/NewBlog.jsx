@@ -62,9 +62,9 @@ const [newBlog, setNewBlog] = React.useState({
     setNewBlog({...newBlog, [e.target.name]:e.target.value })
     // console.log(e.target.value);
   }
-  console.log(newBlog);
+  // console.log(newBlog);
 
-  console.log(state.categories); 
+  // console.log(state.categories); 
   return (
     <Card
       sx={{

@@ -30,13 +30,13 @@ const BlogCard = () => {
     postLikes(e);
     // getBlogs()
   };
-console.log(currentUser);
+// console.log(currentUser);
   // console.log(state.data);
   // const handleClick = (id) => {
   // navigate("/blog-detail/" + `${id}` + "/")
   // console.log(id);
   // }
-  console.log(state.data);
+  // console.log(state.data);
   return (
     <Box
       sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", m: 3 }}
@@ -99,6 +99,7 @@ console.log(currentUser);
           >
             <Box sx={{ gap: 2 }}>
               <IconButton
+              disabled = {currentUser?.user?.id ? false : true}
                 aria-label="favorites"
                 sx={{ gap: 1 }}
                 onClick={() => handleClick(item.id)}

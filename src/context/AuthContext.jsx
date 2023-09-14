@@ -85,11 +85,11 @@ const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
-  console.log(state);
+  // console.log(state);
   const logoutUser = async () => {
     try {
       const { data } = await axios.post(`${url}users/auth/logout/`);
-      console.log(data);
+      // console.log(data);
       // currentUser?.key ? Swal.fire("Logged Out succesfully") : null;
       if (currentUser?.key != ""){
         Swal.fire("Logged Out succesfully")
@@ -105,7 +105,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
-  console.log(currentUser);
+  // console.log(currentUser);
   const values = {
     createUser,
     loginUser,
