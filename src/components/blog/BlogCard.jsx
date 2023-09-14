@@ -29,9 +29,9 @@ const BlogCard = () => {
     postLikes(e);
     // getBlogs()
   };
-  console.log(currentUser);
-  console.log(state?.data);
-  console.log(state);
+  // console.log(currentUser);
+  // console.log(state?.data);
+  // console.log(state);
   // const handleClick = (id) => {
   // navigate("/blog-detail/" + `${id}` + "/")
   // console.log(id);
@@ -41,7 +41,7 @@ const BlogCard = () => {
     <Box
       sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", m: 3 }}
     >
-      BlogCard
+      
       {state?.data?.map((item) => (
         <Card
           key={item?.id}

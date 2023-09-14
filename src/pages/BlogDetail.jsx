@@ -15,7 +15,6 @@ import CommentForm from "../components/blog/CommentForm";
 import { BlogContext } from "../context/BlogContext";
 import { AuthContext } from "../context/AuthContext";
 
-
 // import * as React from 'react';
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
@@ -23,8 +22,6 @@ import { AuthContext } from "../context/AuthContext";
 import Modal from "@mui/material/Modal";
 import UpdateModal from "../components/blog/UpdateModal";
 import Swal from "sweetalert2";
-
-
 
 const BlogDetail = () => {
   const style = {
@@ -40,11 +37,11 @@ const BlogDetail = () => {
   };
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
-      confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
     },
-    buttonsStyling: false
-  })
+    buttonsStyling: false,
+  });
   const { id } = useParams();
 
   const [open, setOpen] = React.useState(false);
@@ -53,46 +50,48 @@ const BlogDetail = () => {
 
   // console.log(id);
   const { state: authState, currentUser } = React.useContext(AuthContext);
-  const { getBlogWithId, state, getBlogs,deleteBlog } = React.useContext(BlogContext);
+  const { getBlogWithId, state, getBlogs, deleteBlog, postLikes } =
+    React.useContext(BlogContext);
   const [toggle, setToggle] = React.useState(false);
   const navigate = useNavigate();
 
-  console.log(authState?.user?.id);
+  // console.log(authState?.user?.id);
   // console.log(detailData?.id);
 
   const handleClick = () => {
     navigate("/");
   };
   const handleDelete = () => {
-    swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-        deleteBlog(id)
-    navigate("/");
-
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
-        )
-      }
-    })
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire(
+            "Deleted!",
+            "Your file has been deleted.",
+            "success"
+          );
+          deleteBlog(id);
+          navigate("/");
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Cancelled",
+            "Your imaginary file is safe :)",
+            "error"
+          );
+        }
+      });
   };
   const handleToggle = () => {
     setToggle(!toggle);
@@ -165,8 +164,23 @@ const BlogDetail = () => {
           sx={{ display: "flex", justifyContent: "space-between", padding: 2 }}
         >
           <Box sx={{ gap: 2 }}>
-            <IconButton aria-label="favorites" sx={{ gap: 1 }}>
-              <FavoriteIcon sx={{ mt: 1, width: 18, height: 18 }} />
+            <IconButton
+              aria-label="favorites"
+              sx={{ gap: 1 }}
+              onClick={() => postLikes(id)}
+            >
+              <FavoriteIcon
+                sx={{
+                  mt: 1,
+                  width: 18,
+                  height: 18,
+                  color: detailData?.likes_n?.some(
+                    (i) => i?.user_id == currentUser?.user?.id
+                  )
+                    ? "red"
+                    : "",
+                }}
+              />
               <Typography variant="body2" sx={{ mt: 1 }}>
                 {detailData?.likes}
               </Typography>

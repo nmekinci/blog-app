@@ -42,7 +42,7 @@ const CommentForm = ({ id }) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
   // console.log(comment);
-  console.log(state.comment);
+  // console.log(state.comment);
 
   return (
     <>
