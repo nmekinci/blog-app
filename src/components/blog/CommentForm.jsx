@@ -18,7 +18,8 @@ import { BlogContext } from "../../context/BlogContext";
 // );
 
 const CommentForm = ({ id }) => {
-  const { postComments, getcomments, state } = React.useContext(BlogContext);
+  const { postComments, getcomments, getBlogs, state } =
+    React.useContext(BlogContext);
 
   const [comment, setComment] = React.useState({
     post: id,
@@ -26,6 +27,7 @@ const CommentForm = ({ id }) => {
   });
 
   React.useEffect(() => {
+    getBlogs();
     getcomments(id);
   }, []);
 
@@ -34,7 +36,7 @@ const CommentForm = ({ id }) => {
     setComment({
       post: id,
       content: "",
-    })
+    });
   };
   const handleChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
@@ -43,31 +45,15 @@ const CommentForm = ({ id }) => {
   console.log(state.comment);
 
   return (
-    <Card sx={{ maxWidth: 500, margin: "auto", mb: 1 }}>
-      {/* <CardContent>
-        <hr />
-        <Typography variant="body2" color="text.secondary">
-          User Name
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Date
-        </Typography>
-        <Typography variant="body2" sx={{ textAlign: "justify" }}>
-          well meaning and kindly. Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit. Veniam nam repellendus beatae hic sunt voluptates
-          enim officia nihil aperiam ipsa.
-        </Typography>
-      </CardContent>
-      <hr />
-      <hr /> */}
+    <>
+  
       {state?.comment?.map((item) => (
-        <>
-          <hr />
-
+            
+        <Card key={item?.id} sx={{ maxWidth: 500, margin: "auto", mb: 1 }}>
           <CardContent
-            key={item?.id}
             sx={{ minWidth: 300, margin: "auto", mb: 1 }}
           >
+            <hr />
             <Typography variant="body2" color="text.secondary">
               {item?.user}
             </Typography>
@@ -78,7 +64,7 @@ const CommentForm = ({ id }) => {
               {item?.content}
             </Typography>
           </CardContent>
-        </>
+          </Card>
       ))}
       <hr />
       <Box sx={{ textAlign: "center" }}>
@@ -93,23 +79,23 @@ const CommentForm = ({ id }) => {
           onChange={(e) => handleChange(e)}
           name="content"
           value={comment?.content}
-        />
+          />
         <CardActions
           sx={{ display: "flex", justifyContent: "center", margin: 2 }}
-        >
+          >
           <Button
-          disabled={comment?.content?.trim() ? false : true} //! i liked it
+            disabled={comment?.content?.trim() ? false : true} //! i liked it
             size="small"
             variant="contained"
             color="success"
             sx={{ width: "90%" }}
             onClick={handleClick}
-          >
+            >
             Add Comment
           </Button>
         </CardActions>
       </Box>
-    </Card>
+            </>
   );
 };
 export default CommentForm;

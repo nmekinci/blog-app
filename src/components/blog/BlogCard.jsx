@@ -18,7 +18,6 @@ const BlogCard = () => {
   const navigate = useNavigate();
   const { currentUser } = React.useContext(AuthContext);
 
-
   const { getBlogs, postLikes, state } = React.useContext(BlogContext);
   // const [state, dispatch] = React.useReducer(reducerBlog, initialBlogState);
 
@@ -30,7 +29,7 @@ const BlogCard = () => {
     postLikes(e);
     // getBlogs()
   };
-// console.log(currentUser);
+  // console.log(currentUser);
   // console.log(state.data);
   // const handleClick = (id) => {
   // navigate("/blog-detail/" + `${id}` + "/")
@@ -99,7 +98,8 @@ const BlogCard = () => {
           >
             <Box sx={{ gap: 2 }}>
               <IconButton
-              disabled = {currentUser?.user?.id ? false : true}
+                disabled={currentUser?.user?.id ? false : true}
+                //! above code line provide us to disable button if user logged out
                 aria-label="favorites"
                 sx={{ gap: 1 }}
                 onClick={() => handleClick(item.id)}
@@ -109,7 +109,11 @@ const BlogCard = () => {
                     mt: 1,
                     width: 18,
                     height: 18,
-                    color: item.likes_n.some(i => i.user_id == currentUser?.user?.id) ? "red" : ""
+                    color: item.likes_n.some(
+                      (i) => i.user_id == currentUser?.user?.id
+                    )
+                      ? "red"
+                      : "",
                     //! the above line will provide us if the user click the like button like button will appear red else default
                   }}
                 />
@@ -133,10 +137,7 @@ const BlogCard = () => {
             <Button
               size="small"
               variant="contained"
-              onClick={() => 
-                navigate("/details/" + item.id + "/"
-                
-                )}
+              onClick={() => navigate("/details/" + item.id + "/")}
             >
               {/* <Button size="small" variant="contained" onClick={() => handleClick(item.id)}> */}
               Read More

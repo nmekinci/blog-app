@@ -15,12 +15,37 @@ import CommentForm from "../components/blog/CommentForm";
 import { BlogContext } from "../context/BlogContext";
 import { AuthContext } from "../context/AuthContext";
 
+// import * as React from 'react';
+// import Box from '@mui/material/Box';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import UpdateModal from "../components/blog/UpdateModal";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const BlogDetail = () => {
   const { id } = useParams();
 
+
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   // console.log(id);
-  const { state: authState } = React.useContext(AuthContext);
-  const { getBlogWithId, state } = React.useContext(BlogContext);
+  const { state: authState, currentUser } = React.useContext(AuthContext);
+  const { getBlogWithId, state, getBlogs } = React.useContext(BlogContext);
   const [toggle, setToggle] = React.useState(false);
   const navigate = useNavigate();
 
@@ -35,11 +60,12 @@ const BlogDetail = () => {
   };
 
   React.useEffect(() => {
-    // getBlogWithId(id)
+    getBlogs()
   }, []);
-  // console.log(state.data);
-  const detailData = state.data.filter((item) => item.id == id)[0];
+  // console.log(state?.data);
+  const detailData = state?.data?.filter((item) => item?.id == id)[0];
   // console.log(detailData);
+  // console.log(currentUser);
   return (
     <Box
       sx={{
@@ -129,16 +155,43 @@ const BlogDetail = () => {
         </Box>
         <Box
           sx={
-            {margin:2,}
-          //   detailData?.id == authState?.user?.id
-          //     ? { display: "block" }
-          //     : { display: "none" }
+            { margin: 2 }
+            //   detailData?.id == authState?.user?.id
+            //     ? { display: "block" }
+            //     : { display: "none" }
           }
         >
-          <Button size="small" variant="contained" color="success">
+          <Button
+            disabled={
+              currentUser?.user?.username == detailData?.author ? false : true
+            }
+            size="small"
+            variant="contained"
+            color="success"
+            onClick={handleOpen}
+
+          >
             Update
           </Button>
-          <Button size="small" variant="contained" color="warning">
+          <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <UpdateModal detailData={detailData} handleClose={handleClose}/>
+      </Modal>
+
+          <Button
+            disabled={
+              currentUser?.user?.username == detailData?.author ? false : true
+            }
+            size="small"
+            variant="contained"
+            color="warning"
+            onClick={handleClick}
+
+          >
             Delete
           </Button>
         </Box>

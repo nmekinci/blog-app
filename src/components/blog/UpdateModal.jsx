@@ -10,6 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField } from "@mui/material";
+import { BlogContext } from "../../context/BlogContext";
+import { HdrEnhancedSelectOutlined } from "@mui/icons-material";
 
 // const bull = (
 //   <Box
@@ -20,7 +22,32 @@ import { TextField } from "@mui/material";
 //   </Box>
 // );
 
-const UpdateModal = () => {
+const UpdateModal = ({detailData, handleClose}) => {
+  const {getCategories,state,updateBlog} = React.useContext(BlogContext)
+
+  const [updatedBlog, setUpdatedBlog] = React.useState({
+    title: detailData?.title,
+    content: detailData?.content,
+    image: detailData?.image,
+    category: detailData?.category,
+    status: detailData?.status,
+    // slug: detailData?.slug,
+  })
+const handleChange = (e) => {
+e.preventDefault()
+setUpdatedBlog({...updatedBlog, [e.target.name]:e.target.value})
+}
+const handleClick = () => {
+  updateBlog(detailData?.id, updatedBlog)
+  handleClose()
+}
+
+  console.log(detailData);
+  React.useEffect(() => {
+    getCategories()
+  }, [])
+
+
   return (
     <Card
       sx={{
@@ -37,6 +64,9 @@ const UpdateModal = () => {
             id="title"
             label="Title"
             variant="standard"
+            name="title"
+            value={updatedBlog?.title || ""}
+            onChange={handleChange}
             sx={{ m: 1, minWidth: 120 }}
           />
           <TextField
@@ -44,6 +74,10 @@ const UpdateModal = () => {
             label="Image URL"
             variant="standard"
             sx={{ m: 1, minWidth: 120 }}
+            name="image"
+            value={updatedBlog?.image || ""}
+            onChange={handleChange}
+
           />
 
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -57,13 +91,18 @@ const UpdateModal = () => {
               // onChange={handleChange}
               label="Category"
               // sx={centered}
+              name="category"
+            value={updatedBlog?.category || ""}
+            onChange={handleChange}
+
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
+              {state.categories.map( (item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
+              {/* <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -75,14 +114,19 @@ const UpdateModal = () => {
               id="demo-simple-select-standard"
               // value={age}
               // onChange={handleChange}
-              label="Category"
+              label="Status"
+              name="status"
+            value={updatedBlog?.status || ""}
+            onChange={handleChange}
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value="d">Draft</MenuItem>
+              <MenuItem value="p">Published</MenuItem>
+              {/* <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
 
@@ -94,6 +138,9 @@ const UpdateModal = () => {
             // defaultValue="Default Value"
             variant="standard"
             sx={{ m: 1, minWidth: 120 }}
+            name="content"
+            value={updatedBlog?.content || ""}
+            onChange={handleChange}
           />
 
           <Button
@@ -101,6 +148,16 @@ const UpdateModal = () => {
             size="large"
             color="success"
             sx={{ m: 1, minWidth: 120 }}
+            disabled={ //! let use here yup or formik for validation
+              updatedBlog?.title?.trim() && 
+              updatedBlog?.content?.trim() && 
+              updatedBlog?.image?.trim() && 
+              updatedBlog?.category !== "" && updatedBlog?.category != "0" &&
+              updatedBlog?.status?.trim() && updatedBlog?.status != "0" 
+              ?
+              false : true
+            }
+            onClick={handleClick}
           >
             Update Blog
           </Button>

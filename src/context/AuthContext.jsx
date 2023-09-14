@@ -11,6 +11,8 @@ const AuthContextProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+
+//!session storage area
   const [currentUser, setCurrentUser] = useState(() => {
     const savedCurrentUser = sessionStorage.getItem(
       "Blog-app-savedCurrentUser"
@@ -24,6 +26,9 @@ const AuthContextProvider = ({ children }) => {
           error: "",
         };
   });
+//!session storage area
+
+
 
   const url = process.env.REACT_APP_BASE_URL;
 
@@ -44,10 +49,14 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+//!session storage area
+
     sessionStorage.setItem(
       "Blog-app-savedCurrentUser",
       JSON.stringify(currentUser)
     );
+//!session storage area
+
     // loginUser(newuser);
     // createUser(newRegisterUser);
     // logoutUser()
