@@ -128,7 +128,8 @@ const getBlogWithId = async (id) => {
   dispatch({ type: "START" });
   try {
     const { data } = await axiosWithKey.get(`api/blogs/${id}/`);
-    dispatch({ type: "SUCCESS", payload: data });
+    dispatch({ type: "SUCCESS"});
+    getBlogs()
   } catch (error) {
     dispatch({ type: "FAIL", payload: error });
     console.log(error);

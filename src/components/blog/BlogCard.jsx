@@ -18,7 +18,7 @@ const BlogCard = () => {
   const navigate = useNavigate();
   const { currentUser } = React.useContext(AuthContext);
 
-  const { getBlogs, postLikes, state } = React.useContext(BlogContext);
+  const { getBlogs, postLikes, state, getBlogWithId } = React.useContext(BlogContext);
   // const [state, dispatch] = React.useReducer(reducerBlog, initialBlogState);
 
   React.useEffect(() => {
@@ -138,7 +138,10 @@ const BlogCard = () => {
             <Button
               size="small"
               variant="contained"
-              onClick={() => navigate("/details/" + item?.id + "/")}
+              onClick={() =>
+                 {navigate("/details/" + item?.id + "/")
+                 getBlogWithId(item?.id)}
+                }
             >
               {/* <Button size="small" variant="contained" onClick={() => handleClick(item.id)}> */}
               Read More
