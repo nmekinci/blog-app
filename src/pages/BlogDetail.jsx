@@ -15,29 +15,37 @@ import CommentForm from "../components/blog/CommentForm";
 import { BlogContext } from "../context/BlogContext";
 import { AuthContext } from "../context/AuthContext";
 
+
 // import * as React from 'react';
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 import UpdateModal from "../components/blog/UpdateModal";
+import Swal from "sweetalert2";
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+
 
 const BlogDetail = () => {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
   const { id } = useParams();
-
-
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -45,7 +53,7 @@ const BlogDetail = () => {
 
   // console.log(id);
   const { state: authState, currentUser } = React.useContext(AuthContext);
-  const { getBlogWithId, state, getBlogs } = React.useContext(BlogContext);
+  const { getBlogWithId, state, getBlogs,deleteBlog } = React.useContext(BlogContext);
   const [toggle, setToggle] = React.useState(false);
   const navigate = useNavigate();
 
@@ -55,12 +63,43 @@ const BlogDetail = () => {
   const handleClick = () => {
     navigate("/");
   };
+  const handleDelete = () => {
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        deleteBlog(id)
+    navigate("/");
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  };
   const handleToggle = () => {
     setToggle(!toggle);
   };
 
   React.useEffect(() => {
-    getBlogs()
+    getBlogs();
   }, []);
   // console.log(state?.data);
   const detailData = state?.data?.filter((item) => item?.id == id)[0];
@@ -169,18 +208,17 @@ const BlogDetail = () => {
             variant="contained"
             color="success"
             onClick={handleOpen}
-
           >
             Update
           </Button>
           <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <UpdateModal detailData={detailData} handleClose={handleClose}/>
-      </Modal>
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <UpdateModal detailData={detailData} handleClose={handleClose} />
+          </Modal>
 
           <Button
             disabled={
@@ -189,8 +227,7 @@ const BlogDetail = () => {
             size="small"
             variant="contained"
             color="warning"
-            onClick={handleClick}
-
+            onClick={handleDelete}
           >
             Delete
           </Button>

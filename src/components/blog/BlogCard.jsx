@@ -29,8 +29,9 @@ const BlogCard = () => {
     postLikes(e);
     // getBlogs()
   };
-  // console.log(currentUser);
-  // console.log(state.data);
+  console.log(currentUser);
+  console.log(state?.data);
+  console.log(state);
   // const handleClick = (id) => {
   // navigate("/blog-detail/" + `${id}` + "/")
   // console.log(id);
@@ -41,9 +42,9 @@ const BlogCard = () => {
       sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", m: 3 }}
     >
       BlogCard
-      {state.data.map((item) => (
+      {state?.data?.map((item) => (
         <Card
-          key={item.id}
+          key={item?.id}
           sx={{
             maxWidth: 345,
             m: 2,
@@ -52,8 +53,8 @@ const BlogCard = () => {
         >
           <CardMedia
             sx={{ height: 140 }}
-            image={item.image}
-            title={item.author}
+            image={item?.image}
+            title={item?.author}
           />
           <CardContent>
             <Typography
@@ -62,21 +63,21 @@ const BlogCard = () => {
               component="div"
               sx={{ textAlign: "center" }}
             >
-              {item.title}
+              {item?.title}
             </Typography>
             <Typography
               variant="body2"
               color="text.secondary"
               sx={{ textAlign: "justify" }}
             >
-              {item.content}
+              {item?.content}
             </Typography>
             <Typography
               variant="body2"
               color="text.secondary"
               sx={{ mt: 1, textAlign: "justify" }}
             >
-              {item.publish_date}
+              {item?.publish_date}
             </Typography>
             <Box sx={{ display: "flex", gap: 2 }}>
               <Avatar
@@ -84,7 +85,7 @@ const BlogCard = () => {
                 sx={{ mt: 1, width: 24, height: 24 }}
               />
               <Typography variant="body2" sx={{ mt: 1, textAlign: "justify" }}>
-                {item.author}
+                {item?.author}
               </Typography>
             </Box>
           </CardContent>
@@ -102,15 +103,15 @@ const BlogCard = () => {
                 //! above code line provide us to disable button if user logged out
                 aria-label="favorites"
                 sx={{ gap: 1 }}
-                onClick={() => handleClick(item.id)}
+                onClick={() => handleClick(item?.id)}
               >
                 <FavoriteIcon
                   sx={{
                     mt: 1,
                     width: 18,
                     height: 18,
-                    color: item.likes_n.some(
-                      (i) => i.user_id == currentUser?.user?.id
+                    color: item?.likes_n?.some(
+                      (i) => i?.user_id == currentUser?.user?.id
                     )
                       ? "red"
                       : "",
@@ -118,26 +119,26 @@ const BlogCard = () => {
                   }}
                 />
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  {item.likes}
+                  {item?.likes}
                 </Typography>
               </IconButton>
               <IconButton aria-label="favorites" sx={{ gap: 1 }}>
                 <ChatIcon sx={{ mt: 1, width: 18, height: 18 }} />
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  {item.comment_count}
+                  {item?.comment_count}
                 </Typography>
               </IconButton>
               <IconButton aria-label="favorites" sx={{ gap: 1 }}>
                 <RemoveRedEyeIcon sx={{ mt: 1, width: 18, height: 18 }} />
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  {item.post_views}
+                  {item?.post_views}
                 </Typography>
               </IconButton>
             </Box>
             <Button
               size="small"
               variant="contained"
-              onClick={() => navigate("/details/" + item.id + "/")}
+              onClick={() => navigate("/details/" + item?.id + "/")}
             >
               {/* <Button size="small" variant="contained" onClick={() => handleClick(item.id)}> */}
               Read More
