@@ -59,7 +59,7 @@ const BlogDetail = () => {
   // console.log(detailData?.id);
 
   const handleClick = () => {
-    navigate("/");
+    navigate(-1);
   };
   const handleDelete = () => {
     swalWithBootstrapButtons
