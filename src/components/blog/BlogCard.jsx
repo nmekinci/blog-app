@@ -12,9 +12,12 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useNavigate } from "react-router-dom";
 import { BlogContext } from "../../context/BlogContext";
 import { initialBlogState, reducerBlog } from "../../reducer/blogReducer";
+import { AuthContext } from "../../context/AuthContext";
 
 const BlogCard = () => {
   const navigate = useNavigate();
+  const { currentUser } = React.useContext(AuthContext);
+
 
   const { getBlogs, postLikes, state } = React.useContext(BlogContext);
   // const [state, dispatch] = React.useReducer(reducerBlog, initialBlogState);
@@ -27,13 +30,13 @@ const BlogCard = () => {
     postLikes(e);
     // getBlogs()
   };
-
+console.log(currentUser);
   // console.log(state.data);
   // const handleClick = (id) => {
   // navigate("/blog-detail/" + `${id}` + "/")
   // console.log(id);
   // }
-  // console.log(state.data);
+  console.log(state.data);
   return (
     <Box
       sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", m: 3 }}
@@ -105,7 +108,7 @@ const BlogCard = () => {
                     mt: 1,
                     width: 18,
                     height: 18,
-                    //! color: item.likes_n.some(i => i.user_id === currentUser.id) ? "red" : ""
+                    color: item.likes_n.some(i => i.user_id == currentUser?.user?.id) ? "red" : ""
                     //! the above line will provide us if the user click the like button like button will appear red else default
                   }}
                 />

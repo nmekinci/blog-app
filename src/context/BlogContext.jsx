@@ -194,6 +194,7 @@ const postLikes = async (id) => {
   try {
     const { data } = await axiosWithKey.post(`${url}api/likes/${id}/`);
     dispatch({ type: "SUCCESS-LIKE"});
+    // getlikes(id)
     getBlogs()
   } catch (error) {
     dispatch({ type: "FAIL", payload: error });
