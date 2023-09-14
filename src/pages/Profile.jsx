@@ -2,8 +2,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { CardMedia, Typography } from "@mui/material";
+import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
+  const { state: authState, currentUser } = React.useContext(AuthContext);
+console.log(currentUser);
   return (
     <Box sx={{ display:"flex", justifyContent:"center",mt:4 }}>
       <Box
@@ -15,7 +18,11 @@ const Profile = () => {
       >
         <CardMedia
           sx={{ margin:2 , height: 200 }}
-          image="https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg"
+          image={currentUser?.user?.image == "" ?
+          "https://i1.sndcdn.com/avatars-000657382289-iowytg-t500x500.jpg"
+          :
+          currentUser?.user?.image
+        }
           
         />
         <Typography
@@ -24,14 +31,14 @@ const Profile = () => {
             component="div"
             sx={{ textAlign: "center" }}
           >
-            User Name
+            {currentUser?.user?.username}
           </Typography><Typography
             gutterBottom
             variant="h5"
             component="div"
             sx={{ textAlign: "center" }}
           >
-            Email adress
+            {currentUser?.user?.email}
           </Typography>
       </Box>
     </Box>
